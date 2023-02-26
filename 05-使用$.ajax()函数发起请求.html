@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <button id="btn01">发起GET请求</button>
+    <button id="btn02">发起POST请求</button>
+
+</body>
+<script>
+    /*
+        $.ajax()是一个功能比较综合的函数，它允许我们对Ajax进行更加详细的配置
+        基本语法如下
+            $.ajax({
+                type:'',请求的方式GET/POST
+                url:''请求的URL地址
+                data:{}这次请求携带的数据
+                success:function(res){}请求成功之后的回调函数
+            })
+    */
+    $(function () {
+        $('#btn01').on('click', function () {
+            $.ajax({
+                type: 'GET',
+                url: 'http://www.liulongbin.top:3006/api/getbooks',
+                data: {
+                    id: 1,
+                },
+                success: function (res) {
+                    console.log(res);
+                }
+            })
+        })
+        $('#btn02').on('click', function () {
+            $.ajax({
+                type: 'POST',
+                url: 'http://www.liulongbin.top:3006/api/addbook',
+                data: {
+                    bookname: "水浒传",
+                    author: '施耐庵',
+                    publisher: '天津图书出版社'
+                },
+                success: function (res) {
+                    console.log(res);
+                }
+            })
+        })
+    })
+
+</script>
+
+</html>

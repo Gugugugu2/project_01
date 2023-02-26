@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+    /*
+        XHR新功能
+            1、可以设置HTTP请求的时限
+            2、可以使用FormData对象管理表单数据
+            3、可以上传文件
+            4、可以获得数据传输的进度信息
+    */
+
+
+    // 设置HTTP请求时限 
+    /*
+        xhr.timeout=3000。该语句鉴古仔长的等待时间设置为3000ms，过了这个时限
+        就自动停止HTTP请求，与之配套的还有一个timeout事件，用来指定回调函数
+
+        xhr.ontimeout=function(){
+            alert('请求超时!');
+        }
+    */
+
+    let xhr = new XMLHttpRequest();
+
+    // 设置超时时间
+    xhr.timeout = 3000;
+    // 设置超市之后的链接
+    xhr.ontimeout = function () {
+        alert("超时了!");
+    }
+
+    xhr.open('GET', 'http://www.liulongbin.top:3006/api/getbooks');
+    xhr.send();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    }
+
+</script>
+
+</html>

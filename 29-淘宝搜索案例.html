@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #inp1 {
+            width: 580px;
+            height: 40px;
+            position: absolute;
+            top: 30%;
+            left: 30%;
+            font-size: 16px;
+            padding-left: 20px;
+            outline: none;
+        }
+
+        #inp1::placeholder {
+            font-size: 14px;
+            color: #bfbfbf;
+        }
+
+        #suggest_list {
+            width: 602px;
+            border: 2px solid goldenrod;
+            height: 200px;
+            overflow: auto;
+            cursor: pointer;
+            display: none;
+            position: absolute;
+            left: 30%;
+            top: 36%;
+            border-top: none;
+        }
+
+        #suggest_list ol li:hover {
+            /* background-color: goldenrod; */
+            color: goldenrod;
+        }
+
+        #suggest_list ol li {
+            height: 30px;
+            /* list-style: none; */
+
+
+        }
+
+
+        img {
+            position: absolute;
+            width: 300px;
+            top: 8%;
+            left: 40%;
+        }
+
+        #app {
+            position: relative;
+            width: 1536px;
+            height: 800px;
+        }
+
+        .addClass {
+            border: 2px solid goldenrod;
+            border-bottom: 2px solid black;
+            /* border-bottom: none; */
+
+        }
+    </style>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <img src="./img/baidu.png" alt="">
+        </div>
+        <div>
+            <input type="text" id="inp1" placeholder="请输入关键字">
+        </div>
+
+        <!-- 搜索建议列表 -->
+        <div id="suggest_list">
+            <ol id="uls"></ol>
+        </div>
+    </div>
+
+</body>
+<script>
+
+    $(function () {
+        // 定义演示器的ID
+        var timer = null;
+
+        // 定义全局缓存对象
+        var cacheObj = {};
+
+        // 定义防抖的函数
+        function debounceSearch(kw) {
+            timer = setTimeout(function () {
+                getSuggestions(kw);
+                // 定时器
+                let timeOut = setTimeout(function () {
+                    var allLi = document.querySelectorAll('li');
+                    // console.log(allLi);
+                    // alert(allLi.length + "HHH")
+                    for (let i = 0; i < allLi.length; i++) {
+                        allLi[i].onclick = function () {
+                            $('#inp1').val($(this).text());
+                            $('#suggest_list').hide();
+                            $("#inp1").removeClass("addClass");
+                        }
+                    }
+                }, 600);
+            }, 500);
+
+        };
+
+        $('#inp1').on('keyup', function (e) {
+
+            clearTimeout(timer);
+
+            var keywords = $(this).val().trim();
+            if (keywords.length <= 0) {
+                $('#suggest_list').hide();
+                $("#inp1").removeClass("addClass");
+                return;
+            };
+
+            // $("#pid").css({"color":"red","font-size":"20px"});
+            $("#inp1").addClass("addClass");
+
+
+
+
+            // 优先从缓存中获取搜索建议
+            // if (cacheObj[keywords]){
+            //     return 
+            // }
+
+            debounceSearch(keywords);
+            $('#suggest_list').show();
+
+        });
+
+
+        function getSuggestions(kw) {
+            $('#uls').empty();
+            $.ajax({
+                method: 'GET',
+                dataType: 'jsonp',
+                url: 'https://suggest.taobao.com/sug?q=' + kw,
+                success: function (res) {
+                    // console.log(res.result.length);
+                    // console.log(res.result);
+                    var arr = res.result;
+                    if (arr.length === 0) {
+                        $('#suggest_list').hide();
+                        $("#inp1").removeClass("addClass");
+                        return;
+                    }
+                    var uls = document.getElementById('uls');
+                    arr.forEach(item => {
+                        // console.log(item);
+                        var li = document.createElement('li');
+                        li.innerHTML = `${item[0]}`;
+                        uls.appendChild(li);
+                    });
+
+                    // 获取到用户输入的内容，当作键
+                    var k = $("#inp1").val().trim();
+                    // 需要将数据作为值，进行缓存
+                    cacheObj[k] = res.result;
+                }
+            })
+        }
+    })
+
+</script>
+
+</html>

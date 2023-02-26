@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    /*
+        <script>标签不受浏览器同源策略的影响，可以通过src属性，请求非同源的JS脚本
+        因此，JSONP的实现原理，就是通过<script>标签的src属性，请求跨域的数据接口，并通过函数调用的形式，
+            接收跨域接口响应回来的数据
+    */ 
+   function success(data){
+    console.log("JSON响应回来的数据是");
+    console.log(data);
+   }
+
+</script>
+
+<script src="http://ajax.frontend.itheima.net:3006/api/jsonp?callback=success&name=ls&age=30">
+
+</script>
+
+</html>

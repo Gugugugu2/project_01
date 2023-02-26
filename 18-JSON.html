@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+    /*
+        数据交换格式
+            1、XML（很少用）
+            2、JSON（常用）
+                是一种轻量级的文本数据交换格式，专门用于存储和传输数据，
+                但是JSON比XML更小、更快、更容易解析
+
+        JSON的两种结构
+            1、对象结构
+                key必须使用英文的双引号包裹的字符串，value的数据类型可以是数字、字符串（双引号）、布尔值、null、数组、对象6种类型
+            2、数组解构
+                数据结构为["java","js",30,true]。数组中的数据可以是数字、字符串、布尔值、null、数组、对象六种类型
+
+        JSON语法注意事项
+            1、属性名双引号包裹
+            2、字符串类型的值必须使用双引号包裹
+            3、JSON不允许使用单引号表示字符串
+            4、JSON不允许写注释
+            5、JSON的最外层必须是对象或数组格式
+            6、不能使用undefined或者函数作为JSON的值
+            7、JSON的本质就是一个字符串
+    */
+    let obj = { name: "gxf", age: 12 };
+    // 将JS对象转换为JSON字符串   JSON的序列化(将数据对象转换为字符串的形式)
+    console.log(typeof JSON.stringify(obj));
+
+    obj = '{ "name": "gxf", "age": 12 }';
+    // 将JSON字符串转换为JS对象
+    console.log(typeof JSON.parse(obj));
+
+</script>
+
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <button id="btn">发起不带参数的GET请求</button>
+    <button id="btn02">发起带参数的GET请求</button>
+    <button id="btn03">发起带参数的POST请求</button>
+
+</body>
+<script>
+    /*
+        jQuery中发起Ajax请求最常用的三个方法如下
+        $.get()
+        $.post()
+        $.ajax()
+    */
+
+
+    // $.get()语法：$.get(url,[data],[callback])
+    // data和callback是非必选参数，分别要求的是请求资源要携带的参数和请求成功时的回调函数
+
+    
+    //$.post语法：$.post(url,[data],[callback])      
+
+
+    // 可以通过测试工具f12中的netWork中的XHR查看发起的ajax请求
+    $(function () {
+        $('#btn').on('click', function () {
+            $.get('http://www.liulongbin.top:3006/api/getbooks', function (res) {
+                console.log(res);
+            })
+        })
+
+        $('#btn02').on('click', function () {
+            $.get('http://www.liulongbin.top:3006/api/getbooks', { id: 1 }, function (res) {
+                console.log(res);
+            })
+        })
+
+        $('#btn03').on('click', function () {
+            $.post('http://www.liulongbin.top:3006/api/addbook', { bookname: "水浒传", author: '施耐庵', publisher: '天津图书出版社' }, function (res) {
+                console.log(res);
+            })
+        })
+    })
+
+
+
+
+
+
+
+</script>
+
+</html>

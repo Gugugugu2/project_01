@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/axios.js"></script>
+</head>
+
+<body>
+    <button id="btn01">发起GET请求</button>
+    <button id="btn02">发起POST请求</button>
+    <br><br><br>
+    <button id="btn03">发起GET请求</button>
+    <button id="btn04">发起POST请求</button>
+
+</body>
+<script>
+    /*
+        Axios是专注于网络数据请求的库
+        相比于原生的XHR对象，Axios简单易用
+        相比于jQuery，Axios更加轻盈化，只专注于网络数据请求
+    */
+    document.querySelector('#btn01').addEventListener('click', function () {
+        var url = 'http://www.liulongbin.top:3006/api/get';
+        var paramObj = { name: 'zs', age: 20 };
+        axios.get(url, { params: paramObj }).then(function (res) {
+            // res.data才是服务器返回回来的数据。
+            console.log(res);
+            console.log(res.data);
+        })
+    });
+
+
+    document.querySelector('#btn02').addEventListener('click', function () {
+        var url1 = 'http://www.liulongbin.top:3006/api/post';
+        var data1 = { address: '北京', location: '顺义区' };
+        axios.post(url1, data1).then(function (res) {
+            console.log(res.data);
+        })
+    });
+
+
+    /*
+        axios也提供了类似于jQuery中$.ajax()的函数
+
+        axios({
+            method:'GET/POST',
+            url:'',
+            data:{POST数据},
+            params:{GET数据}
+        }).then(callback)
+    */
+
+    document.getElementById('btn03').addEventListener('click', function () {
+        axios({
+            method: 'GET',
+            url: 'http://www.liulongbin.top:3006/api/get',
+            params: {
+                name: '钢铁侠',
+                age: 34
+            },
+        }).then(function (res) {
+            console.log(res.data);
+        })
+    })
+
+
+    document.getElementById('btn04').addEventListener('click', function () {
+        axios({
+            method: 'POST',
+            url: 'http://www.liulongbin.top:3006/api/post',
+            data: {
+                bookname: '钢铁侠',
+                price: 344
+            },
+        }).then(function (res) {
+            console.log(res.data);
+        })
+    })
+
+</script>
+
+</html>

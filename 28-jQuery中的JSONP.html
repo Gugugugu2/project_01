@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+
+</body>
+<script>
+    /*
+        jQuery提供的$.ajax()函数，除了可以发起真正的Ajax数据请求之外，话可以发起JSONP数据请求
+
+        它是通过动态添加删除<script>标签来发起JSONP
+
+        在使用jQuery发起JSONP请求时，如果想要自定义JSONP的参数以及回调函数的名称，可以通过如下两个参数来指定
+        jsonp:'callback'  发送到服务器的参数名称，默认值时callback
+        jsonpCallback:'abc'  自定义的回调函数名称，默认值为jQueryxxx格式
+    */
+    $(function () {
+        $.ajax({
+            url: 'http://cguihjbnk ah ',
+            // 代表我们发起的是JSONP请求
+            datatType: 'jsonp',
+            jsonp: 'callback',
+            jsonpCallback: 'success',
+            success: function (res) {
+                console.log(res);
+            }
+        })
+    })
+
+
+</script>
+
+
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <form action="" id="form1">
+        <input type="text" name="uname" autocomplete="off">
+        <input type="password" name="upwd">
+        <button type="submit">提交</button>
+    </form>
+
+</body>
+<script type="text/javascript">
+    /*
+        FormData对象管理表单数据
+        Ajax操作往往用来提交表单数据，为列方便表单处理，HTML5新增了
+        一个FormData对象，可以模拟表单操作
+    */
+
+    // // 1、新建FormData对象
+    // var fd = new FormData();
+    // // 2、为FormData添加表单项
+    // fd.append('uname', 'zs');
+    // fd.append('upwd', 123456);
+    // // 3、创建XHR对象
+    // let xhr = new XMLHttpRequest();
+    // // 4、指定请求类型与URL地址
+    // xhr.open('POST', 'http://www.liulongbin.top:3006/api/formdata');
+    // // 5、直接提交FormData对象，这与提交网页表单的效果一样
+    // xhr.send(fd);
+
+    // xhr.onreadystatechange = function () {
+    //     if (xhr.status === 200 && xhr.readyState === 4) {
+    //         // console.log(JSON.parse(xhr.responseText));
+    //     }
+    // }
+
+
+
+    var form = document.querySelector('#form1');
+    form.addEventListener('submit', function (e) {
+        // 阻止表单默认提交行为
+        e.preventDefault();
+
+        // 创建FormData,快速获取form表单中的数据
+        var fds = new FormData(form);
+
+        var newXhr = new XMLHttpRequest();
+
+        newXhr.open('POST', 'http://www.liulongbin.top:3006/api/formdata');
+
+        newXhr.send(fds);
+
+        newXhr.onreadystatechange = function () {
+            if (newXhr.readyState === 4 && newXhr.status === 200) {
+                console.log(JSON.parse(newXhr.responseText));
+            }
+        }
+
+    })
+    // form.on('submit', function (e) {
+    //     // 阻止表单默认提交行为
+    //     e.preventDefault();
+
+    //     // 创建FormData,快速获取form表单中的数据
+    //     var fds = new FormData(form);
+
+    //     var newXhr = new XMLHttpRequest();
+
+    //     newXhr.open('POST', 'http://www.liulongbin.top:3006/api/getbooks');
+
+    //     newXhr.send(fds);
+
+    //     newXhr.onreadystatechange = function () {
+    //         if (newXhr.readyState === 4 && newXhr.status === 200) {
+    //             console.log(JSON.parse(newXhr.responseText));
+    //         }
+    //     }
+
+    // })
+
+</script>
+
+</html>

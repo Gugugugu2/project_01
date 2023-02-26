@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    /*
+        安装完Git之后第一件事就是设置自己的用户名和邮件地址，因为通过Git对项目进行版本管理的时候，Git需要使用这些
+        基本信息，来记录是谁对项目进行了操作
+
+            git config --global user.name "itheima"
+
+            git config --global user.email "itheima@itcast.cn"
+        
+        注意：如果使用了--global选项。那么该命令只需要运行一次，即可永久生效
+
+        配置之后信息会被写道C:/Users/用户名文件夹/.getconfig文件中。这个文件是Git的全局配置文件，配置一次即可永久生效
+
+        查看所有的全局配置项
+            git config --list --global
+        
+        查看指定的全局配置项
+            git config user.name
+
+        获取帮助信息（无需联网即可在浏览器中打开帮助手册）
+            git help <verb>  eg:(git help config )
+
+        如果不想查看完整的手册，那么可以用-h选项获得更简明的help输出
+        git config -h(想要获取git config 命令的快速参考)
+
+
+        在现有的目录中初始化仓库
+                如果自己有一个尚未进行版本控制的项目目录，想要使用Git来控制它，需要执行如下两个步骤：
+                    1、在项目目录中，通过鼠标右键来打开“Git Bash”
+                    2、执行git init 命令将当前的目录转化为Git仓库
+                    git init命令会创建一个名为.git的隐藏目录，这个.git目录就是当前项目有的Git仓库，
+                    里面包含了出事的必要文件，这些文件是Git仓库的必要组成部分
+
+        工作区中每一个文件都有可能出现的4种状态
+                未跟踪(Untracked)：不被Git所管理的文件(未跟踪的文件就意味着Git在之前的快照（提交）中没有这些文件;Git不会自动将之纳入跟踪范围，除非明确告诉他“我需要使用Git跟踪管理该文件”)
+                未修改(Unmodified)：工作区中文件的内容和Git仓库中的文件内容保持一致
+                已修改(Modified)：工作区中文件的内容和Git仓库中文件的内容不一致
+                已暂存(Staged)：中作曲中被修改的文件已被放到暂存区，准备将修改后的文件保存到Git仓库中
+
+        Git操作的终极结果：让工作区中的文件都处于未修改的状态
+
+        检查文件的状态
+                可以使用git status命令查看文件出于什么状态
+
+                未跟踪的文件就意味着Git在之前的快照（提交）中没有这些文件;Git不会自动将之纳入跟踪范围，除非明确告诉他“我需要使用Git跟踪管理该文件”
+
+                以精简的方式显示文件的状态
+                    git status -s  (未跟踪的文件前面有红色的??标记)
+        
+        跟踪新文件
+                使用命令 git add 开始跟踪一个文件(eg: git add index.html) 
+
+                以精简的方式显示文件的状态：新添加到暂存区中的文件前面都有绿色的A标记
+
+        提交更新
+                现在暂存区中有一个xcbk.html文件等待被提交到Git仓库中进行保存。可以执行git commit 命令进行提交，其中 -m选项后面是本次的提交信息，用来对提交的内容做进一步的描述
+                git commit -m "提示信息"
+
+        对已提交的文件进行修改
+                目前，xcbk.html文件已经被Git跟踪，并且工作区和Git仓库中的index.html文件内容保持一致。当我们修改了工作区中index.html的内容之后。再次允许git status和 git status -s命令，会看到如下的内容：
+                运行 git status -s 在前面会出现一个红色大写M标记，运行git status该文件出现在Changes not staged for commit这行下面。说明一跟踪的文件的内容发生了变化，但是还没有放到暂存区
+
+        暂存已修改的文件
+                目前，工作区中的index.html文件已被修改，如果要暂存这次修改，需要再次运行git add命令，这个命令是个多功能的命令，主要有如下三个功效
+                    1、可以用它开始跟踪新文件
+                    2、把已跟踪、且已修改的文件放到暂存区
+                    3、把有冲突的文件标记为已解决的状态
+                查看精简的文件状态报告后发现，绿色的M表示文件已修改且已放入暂存区
+
+        提交已暂存的文件
+                再次运行git commit -m "提交消息"，即可将暂存区中记录的xcbk.html的快照，提交到Git仓库进行保存
+
+        撤销对文件的修改
+                撤销对文件的修改指的是：会把工作区中对应文件的修改，还原成Git仓库中所保存的版本。
+                操作的结果：所有的修改会丢失，且无法恢复！危险性比较高，请慎重操作
+                git checkout -- xcbk.html 
+                撤销操作的本质：用Git仓库中保存的文件，覆盖工作区中指定的文件
+
+        向暂存区一次性添加多个文件
+                如果需要被暂存的文件个数比较多，可以使用如下的命令，一次性将所有的新增和修改过的文件加入暂存区
+                git add . (这样就可以了)
+                今后项目开发中，会经常使用这个命令，将新增和修改的文件加入到暂存区
+
+        取消已暂存的文件
+                如果需要从暂存区中移除对应的文件，可以使用如下的命令
+                git reset HEAD 要移除的文件名称
+                git reset . 移除暂存区中所有的文件
+
+        跳过使用暂存区域
+                简化为工作区---》Git仓库
+                Git提供了一个跳过使用暂存区域的方式，只要在提交的时候，给git commit 加上-a选项，Git就会自动
+                把所有已经跟踪过的文件暂存起来一并提交，从而跳过git add步骤
+                git commit -a -m "描述信息"
+                
+        移除文件
+                从Git仓库中移除文件的方式有两种：
+                    1、从Git仓库和工作区中同时移除对应的文件
+                        git rm -f xcbk.html
+                    2、只从Git仓库中移除指定的文件，但保留工作区中对应的文件
+                        git rm --cached xcbk.html
+
+        忽略文件
+                一般我们总会有些文件无需纳入Git管理，也不希望他们总出现在未跟踪的文件列表。在这种情况下，我们可以创建一个
+                名为.gitignore的配置文件，列出要忽略的文件的匹配模式
+                文件.gitignore的格式规范如下
+                    1、以#开头的是注释
+                    2、以/结尾的是目录（文件夹）
+                    3、以/开头防止递归
+                    4、以i开头表示取反
+                    5、可以使用glob模式进行文件和文件夹的匹配（glob指简化了的正则表达式）、
+                        glob：1、星号*匹配0/多个任意字符
+                            2、[abc]匹配任何一个列在方括号中的字符
+                            3、？只匹配一个任意字符
+                            4、在方括号中使用短划线分隔两个字符，表示所有在这两个字符范围内的都可以匹配（eg比如[0-9]表示匹配所以0-9的数字）
+                            5、两个星号**表示匹配任意中间目录（比如a、**、z可以匹配a/z\a/b/z或者a/b/c/z等等）  
+                    .gitignore文件的例子
+                    已经在文件夹中写过
+            
+        查看提交历史
+                如果希望回顾提交历史，可以使用git log这个简单且有效的命令
+
+                查看最近的几条提交历史 git log -数字
+
+                在一行上显示 git log -2 --pretty==oneline
+                
+        回退到指定的版本
+                在一行上展示所有的提交历史
+                    git log --pretty=oneline
+                使用git reset --hard 命令，根据指定的提交ID回退到指定版本
+                    git reset --hard <CommitID>
+                在旧版本中使用git reflog --pretty=oneline命令，查看命令的操作历史
+                        git reflog --pretty=oneline
+                再次根据最新提交的ID跳转到最新的版本
+                        git reset --hard <CommitID>(对应的版本标识)
+
+
+    */ 
+
+</script>
+
+</html>

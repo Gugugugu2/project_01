@@ -1,0 +1,17 @@
+#忽略任何目录下名为js的文件夹
+js/
+
+# 忽略所有的我写的html文件
+# *.html
+
+#但跟踪xcbk.html，即使我在前面忽略了所有的.html文件
+# !xcbk.html
+
+#忽略doc/目录及其所有的子目录下的.pdf文件
+# doc/**/*.pdf
+
+# 忽略doc/notes.txt。但是不忽略doc/server/arch.txt
+# doc/*.txt
+
+# 只忽略当前目录下的TODO文件，而不忽略submir.TODO
+#/TODO

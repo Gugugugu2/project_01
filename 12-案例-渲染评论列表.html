@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <div>
+        <form action="" id="f1">
+            评论人
+            <input type="text" id="inp1">
+            评论内容
+            <input type="text" id="inp2">
+            <button type="submit">发表评论</button>
+        </form>
+    </div>
+    <div>
+        <ul id="cmt-list">
+            <li>
+                <span>5</span>
+                <span>author</span>
+                <span>time</span>
+            </li>
+
+        </ul>
+    </div>
+
+</body>
+<script>
+    $(function () {
+        $('#f1').on('submit', function (e) {
+            $.ajax({
+                type: 'POST',
+                url: 'http://www.liulongbin.top:3006/api/addcmt',
+                data: {
+                    username: $('#inp1').val(),
+                    content: $('#inp2').val(),
+                },
+                success: function (res) {
+                    console.log(res);
+                    getCommentList();
+
+                    // 清空表单栏框中的值
+                    // 将jQuery对象转换为原生dom对象
+                    $('#f1')[0].reset();
+                }
+            })
+
+            e.preventDefault();
+        })
+    });
+
+    // 获取评论信息
+    function getCommentList() {
+        $.ajax({
+            type: 'get',
+            url: 'http://www.liulongbin.top:3006/api/cmtlist',
+            success: function (res) {
+                // console.log(res);
+                if (res.status !== 200) return alert("失败!");
+                var rows = [];
+                $.each(res.data, function (i, item) {
+                    rows.push('<li>&nbsp;&nbsp;&nbsp;&nbsp;' + item.content + '<span>评论时间: &nbsp;&nbsp;&nbsp;&nbsp;' + item.time + '&nbsp;&nbsp;&nbsp;</span><span>评论人:&nbsp;&nbsp;&nbsp;' + item.username + '</span></li>');
+                });
+                $('#cmt-list').empty().append(rows.join(''))
+            }
+        })
+    };
+
+    getCommentList();
+
+</script>
+
+</html>

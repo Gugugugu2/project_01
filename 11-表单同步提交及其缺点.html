@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <form action="" id="f1">
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <button type="submit">提交</button>
+    </form>
+
+</body>
+<script>
+    /*
+        通过点击submit按钮，触发表单提交的操作，从而使页面跳转到action URL的行为，叫做表单的同步提交
+        表单同步的缺点
+            1、<form>表单同步提交后，整个页面会发生跳转，跳转到action URL所指向的地址，用户体验很差
+            2、<form>表单同步提交后，页面之前的状态和数据会丢失
+        
+        解决方案：表单只负责采集数据，Ajax负责将数据提交到服务器
+    */
+
+    // 当监听到表单的提交时间以后，可以调用事件对象的event.preventDefault()函数，来阻止表单的提交和页面的跳转
+
+    
+    //  serialize()函数简化表单中数据获取操作(必须为每个表单元素添加name属性)
+    $(function () {
+        $('#f1').on('submit', function (e) {
+            alert("监听事件");
+            let res = $('#f1').serialize();
+            res = res.replace(/=/g, ":");
+            res = res.replace(/&/g, ',');
+            console.log(res);
+            // 阻止表单的默认提交行为
+            e.preventDefault();
+        })
+    })
+
+</script>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+    /*
+        URL地址中，只允许出现英文相关的字母、标点符号、数字，因此，在URL地址中
+        不允许出现中文字符。如果出现了则必须对中文字符进行编码（转义）
+
+        浏览器提供了URL编码与解码的API，分别是
+            encodeURL 编码的函数
+            decodeURL 解码的函数
+    */
+
+    let res = '黑马程序员';
+    res = encodeURI(res);
+    console.log(res);
+    res = decodeURI(res);
+    console.log(res);
+
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 9.3 将用户输入的内容渲染到聊天窗口
+    $(function () {
+        //初始化右侧滚动条
+        //这个方法定义在scroll.js中
+
+        resetui();
+
+        //为发送按钮绑定鼠标点击事件
+        $('#btnSend').on('click', function () {
+            //获取文本框（用户输入的）中的内容
+            var text = $('#ipt').val().trim();//清除字符串两边的字符串
+            if (text.length <= 0) {
+                return $('#ipt').val('')//清空文本框中的内容
+            }
+            //如果用户输入聊天内容 则将聊天内容追加到页面上显示
+            $('#talk_list').append('<li class="right_word"><img src="img/person02.png" /> <span>' + text + '</span></li>');
+            $('#ipt').val('')//清空字符串
+            //里面的滚动条的位置
+            resetui();
+        })
+    })
+
+    // 9.4 发起请求获取聊天消息
+    //2.获取聊天机器人发送回来的消息
+    function getMsg(text) {
+        $.ajax({
+            method: 'GET',
+            url: 'http://ajax.frontend.itheima.net:3006/api/robot',
+            data: {
+                spoken: text
+            },
+            success: function (res) {
+                console.log(res);
+                if (res.message === 'success') {
+                    //接收聊天消息
+                    var msg = res.data.inof.text; 
+                    $('#talk_list').append('<li class="left_word"><img src="img/person01.png" /> <span>' + msg + '</span></li>')
+                    // 重置滚动条的位置
+                    resetui()
+
+                }
+            }
+        })
+    }
+
+    // 9.5 将机器人的聊天内容转为语音
+    // 把文字转化为语音进行播放(记得将语言转换为自动播放)
+    function getVoice(text) {
+        $.ajax({
+            method: 'GET',
+            url: 'http://ajax.frontend.itheima.net:3006/api/synthesize',
+            data: {
+                text: text
+            },
+            success: function (res) {
+                // console.log(res)
+                if (res.status === 200) {
+                    // 播放语音
+                    $('#voice').attr('src', res.voiceUrl)
+                }
+            }
+        })
+    }
+
+    // 9.6 通过 < audio > 播放语音
+    // <!-- 音频播放语音内容 -->
+    <audio src="" id="voice" autoplay style="display: none;"></audio>
+
+    // 9.7 使用回车发送消息
+    // if (event.key === 'Enter') {}
+    // 为文本框绑定 keyup 事件
+    $('#ipt').on('keyup', function (e) {
+        // console.log(e.keyCode)
+        if (e.keyCode === 13) {
+            // console.log('用户弹起了回车键')
+            $('#btnSend').click()
+        }
+    })
+
+</script>
+
+</html>

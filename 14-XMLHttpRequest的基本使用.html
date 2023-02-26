@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+
+</body>
+<script>
+    /*
+        什么是XMLHttpRequest
+            是浏览器提供的js对象，通过它，可以请求服务器上的数据资源
+            之前所学的jQuery中的ajax函数，就是基于XHR对象封装出来的
+
+        使用XHR发起GET请求步骤
+        1、创建XHR对象
+        2、调用xhr.open()函数
+        3、调用shr.send()函数
+        4、监听xhr.onreadystatechange事件
+            4、1监听xhr对象的请求状态 reafyState；与服务器响应的状态 status
+            4、2打印服务器响应回来的数据 xhr.responseText
+    */
+
+    var xhr = new XMLHttpRequest();
+
+    xhr.open('get', 'http://www.liulongbin.top:3006/api/getbooks');
+
+    xhr.send();
+
+    /*
+        XMLHttpRequest对象的readyState属性，用来表示当前Ajax请求所处的状态，每个Ajax请求必然处于一下状态中的一个
+        0、UNSENT XMLHttpRequest对象以及被创建，但尚未使用open()方法
+        1、OPENED open()方法已经被调用
+        2、HEADERS——RECEIVED send()方法已经被调用，响应头也以及被接受
+        3、LOADING  数据接收中，此时response属性中以及包含部分数据
+        4、DONE   Ajax请求完成，这意味着数据传输以及彻底完成或者失败
+    */
+    xhr.onreadystatechange = function () {
+        // console.log(xhr);
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // 获取服务器端响应的数据
+            // console.log(xhr.responseText);
+        }
+    }
+
+    // 使用XHR发起带参数的GET请求，只需要在xhr.open期间，为URL地址指定参数即可
+    var newXhr = new XMLHttpRequest();
+
+    // 这种在URL地址后面拼接的参数，叫做查询字符串
+    newXhr.open('GET', 'http://www.liulongbin.top:3006/api/getbooks?id=1');
+
+    newXhr.send();
+
+    newXhr.onreadystatechange = function () {
+        if (newXhr.readyState === 4 && newXhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    }
+
+
+
+
+
+</script>
+
+</html>

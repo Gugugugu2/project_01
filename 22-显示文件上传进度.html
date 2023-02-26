@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <form action="">
+        <input type="file" id="files">
+        <br><br>
+        <button type="submit" id="btn">提交</button>
+        <img src="" id="imgs" alt="">
+    </form>
+
+</body>
+<script type="text/javascript">
+    /*
+        新版本的XMLHttpRequest对象中，可以通过监听xhr.upload.onprogress事件，
+        来获取文件的上传进度
+    */
+    var submit = document.getElementById('btn');
+    submit.addEventListener('click', function (e) {
+        e.preventDefault();
+        var files = document.getElementById('files').files;
+        if (files.length <= 0) {
+            return alert("请选择一个文件!");
+        }
+        var fd = new FormData();
+        fd.append('avatar', files[0]);
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", 'http://www.liulongbin.top:3006/api/upload/avatar');
+        // 显示文件上传进度
+        xhr.upload.onprogress = function (e) {
+            // e.lengthComputable是一个布尔值，表示当前上传的资源是否具有可计算的长度
+            if (e.lengthComputable) {
+                // e.loaded一传输的字节
+                // e.total需要传输的总字节
+                var percentComplete = Math.ceil((e.loaded / e.total) * 100);
+                console.log(percentComplete);
+            }
+        }      
+        xhr.send(fd);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);
+                var data = JSON.parse(xhr.responseText);
+                if (data.status === 200) {
+                    document.getElementById('imgs').src = 'http://www.liulongbin.top:3006' + data.url;
+                }
+                else {
+                    alert("失败啦")
+                }
+            }
+        }
+    })
+
+</script>
+
+</html>
