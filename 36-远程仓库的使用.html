@@ -16,6 +16,29 @@
                 远程仓库的两种访问方式
                    1、HTTPS：零配置，但是每次访问仓库时，需要重复输入Github账号和密码才能访问成功
                    2、SSH：需要进行额外的配置，但是配置成功后，每次访问仓库时，不需要每次输入账号和密码
+                
+                基于HTTPS将本地项目上传到Github
+                   1、git remote add origin https://github.com/Gugugugu2/project_01.git
+                   将本地Git仓库和Github上远程的空白仓库建立练习
+                   2、git push -u origin main
+                   将本地仓库中的内容推送到远程origin仓库中
+                
+                SSH Key
+                  作用：实现本地仓库和Github之间免登录的加密数据传输
+
+                  好处：免登录身份认证，数据加密传输
+
+                  SSH key由两部分组成，分别是
+                        1、id_rsa(私钥文件，存放于客户端的电脑中即可)
+                        2、id_rsa.pub(公钥文件，需要配置到Github中)
+                        查看远程仓库：$ git remote -v
+                        4.删除远程仓库：$ git remote remove 远程仓库的别名
+                
+                将远程仓库克隆到本地
+                        打开Git Bash，输入如下的命令并回车执行
+                        git clone 远程仓库的地址
+
+                   
         */ 
 
 
