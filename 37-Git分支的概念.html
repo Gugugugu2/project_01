@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+        /*
+        main主分支
+                在初始化本地Git仓库的时候，Git默认已经帮我们创建了一个名字叫做main的分支
+                通常我们把这个main分支叫做主分支
+        在实际工作中，main主分支的作用时：用来保存和记录整个项目已完成的功能代码
+        因此，不允许程序员在master分支上修改代码
+
+        功能分支指的是专门用来开发新功能的分支，他是和临时从main主分支上分查出来的，当新功能开发且测试
+        完毕后，最终需要合并到main主分支上
+
+        输入 git branch -M main ，上传到 main 分支
+        输入：git remote add origin https://github.com/xxxxx/test.git，和远程仓库连接
+        输入 git push -u origin main 将本地项目推送到远程仓库
+
+        查看所有的分支
+                 git branch
+        创建新分支 
+                使用如下命令，可以基于当前分支，创建一个新的分支，此时，新分支的代码
+                和当前分支完全一样。注意：执行完创建分支的命令之后，用户当前所处的还是main分支
+                git branch 分支名称
+        切换分支
+                使用如下的命令，可以切换到指定的分支进行开发
+                git checkout 指定分支
+        分支的快速创建和切换
+                -b 表示创建一个新分支
+                checkout 表示切换到刚才新建的分支上
+                git checkout -b 新建分类名称
+        合并分支
+                功能分支的代码开发测试完毕之后，可以使用如下的命令，将完成的代码合并到main主分支上
+                git checkout main 切换到main分支
+                git merge login(开发的功能分支) 在main分支上运行git merge命令，将login分支（开发的功能分支）的代码合并到main分支
+        删除分支
+                当把功能分支的代码合并到master主分支上之后，就可以使用如下的命令，删除对应的功能分支(在main分支上删)
+                git branch -d 分支名称
+
+        */ 
+
+
+</script>
+
+</html>
